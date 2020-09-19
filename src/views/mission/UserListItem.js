@@ -24,7 +24,11 @@ import ThumbnailLetters from "../../components/cards/ThumbnailLetters";
             className="card-img-top"
             />
           :
-            <ThumbnailLetters text={`${data.name} ${data.f_name}`} className="responsive border-0 card-img-left" />
+          <img
+            src={`/assets/img/profile-pic-2.jpg`}
+            alt="Detail"
+            className="card-img-top"
+          />
       }
       
         <Badge

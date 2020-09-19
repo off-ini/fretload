@@ -87,6 +87,8 @@ function defineRulesFor(auth) {
     can("view", "Annonces");
 
     can("view", "Propositions");
+    can("view", "ADDPropositions");
+    can("view", "EDITPropositions");
     can("add", "Propositionss");
     can("edit", "Propositions");
     can("delete", "Propositions");
@@ -107,6 +109,8 @@ function defineRulesFor(auth) {
     can("view", "Annonces");
 
     can("view", "Propositions");
+    can("view", "ADDPropositions");
+    can("view", "EDITPropositions");
     can("add", "Propositionss");
     can("edit", "Propositions");
     can("delete", "Propositions");

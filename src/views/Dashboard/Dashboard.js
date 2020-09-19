@@ -13,7 +13,6 @@ import * as msg from '../../utils/messages';
 import APIModel from "../../models/APIModel";
 
 import AnnonceListItem from '../annonce/AnnonceListItem';
-import AddProposition from '../proposition/AddProposition';
 
 class Dashboard extends Component {
   constructor(props)
@@ -43,7 +42,6 @@ class Dashboard extends Component {
     let annonce_news = this.state.annonce_news;
     if(annonce_news && annonce_news.length > 0)
     {
-        console.log({'Annonce':1, 'data':nextProps.annonces[0]});
         annonce_news = [nextProps.annonces[0], ...annonce_news];
         this.setState({
           annonce_news
@@ -188,14 +186,6 @@ class Dashboard extends Component {
           </Colxx>
         </Row>
       </Fragment>
-
-      <AddProposition
-          toggleModal={this.togglePropositionModal}
-          modalOpen={propositionModalOpen}
-          history={this.props.history}
-          user={this.props.user}
-          annonce_id={this.state.annonce_id}
-        />
       </>
     )
   }

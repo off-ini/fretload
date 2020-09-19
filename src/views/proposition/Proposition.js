@@ -243,23 +243,6 @@ class Proposition extends Component {
           </Colxx>
         </Row>
         
-        {/*<PropositionMenu />*/}
-        <Can I="add" a="Propositions">
-          <AddProposition
-            toggleModal={this.toggleAddModal}
-            modalOpen={addModalOpen}
-            history={this.props.history}
-            user={this.props.user}
-          />
-        </Can>
-        <Can I="edit" a="Propositions">
-          <EditProposition
-            toggleModal={this.toggleEditModal}
-            modalOpen={editModalOpen}
-            history={this.props.history}
-            id={this.state.id}
-          />
-        </Can>
     </Fragment>
     )
   }

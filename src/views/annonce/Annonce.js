@@ -25,7 +25,6 @@ import AddAnnonce from './AddAnnonce';
 import EditAnnonce from './EditAnnonce';
 import AnnonceListItem from './AnnonceListItem';
 //import AnnonceMenu from './AnnonceMenu';
-import AddProposition from '../proposition/AddProposition';
 
 class Annonce extends Component {
     constructor(props) {
@@ -276,14 +275,6 @@ class Annonce extends Component {
             id={this.state.id}
           />
         </Can>
-
-        <AddProposition
-          toggleModal={this.togglePropositionModal}
-          modalOpen={propositionModalOpen}
-          history={this.props.history}
-          user={this.props.user}
-          annonce_id={this.state.annonce_id}
-        />
 
     </Fragment>
     )

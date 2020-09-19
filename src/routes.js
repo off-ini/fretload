@@ -11,6 +11,8 @@ const Vehicule = React.lazy(() => import('./views/vehicule/Vehicule'));
 const Marchandise = React.lazy(() => import('./views/marchandise/Marchandise'));
 const Annonce = React.lazy(() => import('./views/annonce/Annonce'));
 const Proposition = React.lazy(() => import('./views/proposition/Proposition'));
+const AddProposition = React.lazy(() => import('./views/proposition/AddProposition'));
+const EditProposition = React.lazy(() => import('./views/proposition/EditProposition'));
 const Mission = React.lazy(() => import('./views/mission/Mission'));
 const AddMission = React.lazy(() => import('./views/mission/AddMission'));
 const EditMission = React.lazy(() => import('./views/mission/EditMission'));
@@ -27,7 +29,9 @@ export default [
   { path: "/app/vehicules", name: "Vehicule", tag:'Vehicules', component: Vehicule },
   { path: "/app/marchandises", name: "Marchandise", tag:'Marchandises', component: Marchandise },
   { path: "/app/annonces", name: "Annonce", tag:'Annonces', component: Annonce },
-  { path: "/app/propositions", name: "Proposition", tag:'Propositions', component: Proposition },
+  { path: "/app/propositions", exact:true, name: "Proposition", tag:'Propositions', component: Proposition },
+  { path: "/app/propositions/add/:id", name: "Add Proposition", tag:'ADDPropositions', component: AddProposition },
+  { path: "/app/propositions/edit/:id", name: "Edit Proposition", tag:'EDITPropositions', component: EditProposition },
   { path: "/app/missions", exact: true, name: "Mission", tag:'Missions', component: Mission },
   { path: "/app/missions/add/:id", name: "Add Mission", tag:'ADDMissions', component: AddMission },
   { path: "/app/missions/edit/:id", name: "Edit Mission", tag:'EDITMissions', component: EditMission },

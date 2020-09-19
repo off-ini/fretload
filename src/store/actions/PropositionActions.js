@@ -13,6 +13,10 @@ export const detail = (id) => {
   return axios.get(APIModel.HOST + "propositions/" + id);
 };
 
+export const detailByAnnonceAndUser = (annonce_id, user_id) => {
+  return axios.get(APIModel.HOST + "propositions/" + annonce_id +'/'+ user_id);
+};
+
 export const create = (data) => {
   return axios.post(APIModel.HOST + "propositions", data);
 };

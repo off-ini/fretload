@@ -1,4 +1,4 @@
-import React, { Component,Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import axios from 'axios';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions/type';
@@ -181,14 +181,15 @@ class AddMission extends Component {
   }
 
   detail = () => {
-    const { match: {params}, detail} = this.props;
+    const { match: {params}, detail, dispatch, history} = this.props;
     detail(params.id)
     .then(res => {
       this.setState({proposition:res.data}, () => {
         this.setState({montant:this.state.proposition.montant_t})
       });
     }).catch(e => {
-      msg.errorHandler(e,null,null)
+      msg.errorHandler(e,dispatch, history)
+      this.props.history.push('/app/propostions');
     })
     .finally(() => this.setState({loading:false}));
   }

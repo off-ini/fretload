@@ -1,21 +1,28 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import axios from 'axios';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions/type';
 import * as actionsCreator from '../../store/actions/PropositionActions';
+import * as annonceActionsCreator from '../../store/actions/AnnonceActions';
 import {
   Row,
   Col,
   Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Input,
   Label,
+  Card,
+  CardBody,
 } from "reactstrap";
+import NumberFormat from 'react-number-format';
 
-
+import { Colxx, Separator } from "../../components/common/CustomBootstrap";
+import Breadcrumb from "../../containers/DefaultLayout/navs/Breadcrumb";
 import * as msg from '../../utils/messages';
+import APIModel from "../../models/APIModel";
+
+import AddVehicule from '../mission/AddVehicule';
+import VehiculeListItem from '../mission/VehiculeListItem';
+import AnnonceListItem from '../annonce/AnnonceListItem';
 
 class AddProposition extends Component {
   constructor(props) {
@@ -23,6 +30,11 @@ class AddProposition extends Component {
 
     this.state = {
         montent_t: null,
+        annonce:null,
+        vehicules:[],
+
+        vehicule_all:null,
+        vehiculeModalOpen: false,
 
         loading:false,
         validing:false,
@@ -30,11 +42,76 @@ class AddProposition extends Component {
     };
   }
 
+  componentDidMount()
+  {
+    this.detail();
+    this.vehicule();
+  }
+
+  vehicule = () => {
+    this.setState({loading:true});
+    let { dispatch, history } = this.props;
+    axios.get(APIModel.HOST + "vehicules/libre")
+          .then(res => {
+            this.setState({vehicule_all:res.data.data}, () => {
+            });
+          })
+          .catch(e => {
+            msg.errorHandler(e,dispatch,history)
+          })
+          .finally(() => this.setState({loading:false}));
+  }
+
+  addVehicule = (id) => {
+    let {vehicules, vehicule_all} = this.state;
+    if(vehicules.find(e => e.id === id))
+    {
+      this.removeVehicule(id);
+    }else{
+      vehicules = [...vehicules, vehicule_all.find(e => e.id === id)];
+      this.setState({
+        vehicules
+      });
+    }
+    
+  }
+
+  removeVehicule = (id) => {
+    let {vehicules} = this.state;
+    vehicules = vehicules.filter(e => e.id !== id);
+    this.setState({
+      vehicules
+    })
+  }
+
+  detail = () => {
+    const { match: {params}, detail, dispatch, history} = this.props;
+    detail(params.id)
+    .then(res => {
+      this.setState({annonce:res.data}, () => {
+        this.setState({
+          montent_t: this.state.annonce.montant
+        });
+      });
+    }).catch(e => {
+      msg.errorHandler(e,dispatch, history)
+      this.props.history.push('/app/propostions');
+    })
+    .finally(() => this.setState({loading:false}));
+  }
+
+
   handleNull = () => {
       this.setState({
         montent_t: "",
       });
   }
+
+  toggleVehiculeModal = () => {
+    this.setState({
+      vehiculeModalOpen: !this.state.vehiculeModalOpen
+    });
+  };
 
   handleChange = (e) =>
   {
@@ -44,6 +121,13 @@ class AddProposition extends Component {
       })
   }
 
+  onValueChange = (values) => {
+    const {formattedValue, value} = values;
+    this.setState({
+      montent_t:value
+    })
+  }
+
   handleChangeLabelOver = (data,e) => {
     this.setState({ [e.name]:data, errors:null });
   };
@@ -51,16 +135,24 @@ class AddProposition extends Component {
   handleSubmit = (e) => {
     this.setState({validing:true});
 
-    let { edit, dispatch, history, user, annonce_id } = this.props
+    let { match: {params}, edit, dispatch, history, user } = this.props;
+    let {vehicules} = this.state;
+
+    let vehicule_ids = [];
+
+    vehicules.map(e => {
+      vehicule_ids = [...vehicule_ids, e.id]
+    });
 
     const options = {
       montant_t:this.state.montent_t,
       status:true,
       user_id: user.id,
-      annonce_id: annonce_id,
+      annonce_id: params.id,
+      vehicule_ids:vehicule_ids,
     };
     //console.log(options);
-    edit(annonce_id, user.id, options)
+    edit(params.id, user.id, options)
     .then(res => {
         dispatch({
           type:actions.EDIT_PROPOSITION, 
@@ -78,31 +170,19 @@ class AddProposition extends Component {
 
   render() {
     const { modalOpen, toggleModal } = this.props;
+    const { annonce, vehicule_all, vehicules,  vehiculeModalOpen } = this.state;
     return (
-      <Modal
-        isOpen={modalOpen}
-        toggle={toggleModal}
-        size="lg"
-        wrapClassName={`${this.props.position ? 'modal-'+this.props.position:''}`}
-        backdrop="static"
-      >
-        <ModalHeader toggle={toggleModal}>
+<>
+<Fragment>
+  <Row className="">
+    <Colxx xxs="12">
+      <h1>
+        <i className="simple-icon-plus heading-icon" />{" "}
+        <span className="align-middle d-inline-block pt-1">
           Nouvelle Proposition
-        </ModalHeader>
-        <ModalBody>
-            <Row>
-                <Col sm={12}>
-                    <Label className="form-group has-float-label">
-                        <Input type="text" name="montent_t" value={this.state.montent_t} onChange={this.handleChange}  invalid/>
-                        <span>Montent *</span>
-                        {
-                          msg.fildsMsgHandler(this.state.errors,'montant_t')
-                        }
-                    </Label>
-                </Col>
-            </Row>      
-        </ModalBody>
-        <ModalFooter>
+        </span>
+      </h1>
+      <div className="text-zero top-right-button-container">
           <Button Color="secondary" outline onClick={toggleModal}>
             Annuler
           </Button>
@@ -117,18 +197,114 @@ class AddProposition extends Component {
               </span>
           <span className="label">Valider</span>
           </Button>
-        </ModalFooter>
-      </Modal>
+      </div>
+      
+      <Breadcrumb match={this.props.match} />
+      <Separator className="mb-5" />
+
+        <Fragment>
+          <Row>
+              {
+                annonce ?
+                  <AnnonceListItem
+                    data={annonce}
+                    show={true}
+                    hideProposition={true}
+                    user={this.props.user} 
+                  />
+                :null
+              }
+              <Colxx xxs="12" lg="6" className="mb-4">
+                <Card className="mb-4">
+                  <CardBody>
+                      <Row>
+                        <Col sm={12}>
+                          <Label className="form-group has-float-label">
+                              <NumberFormat thousandSeparator={true} mask=" " value={parseFloat(this.state.montent_t)} customInput={Input} onValueChange={(values) => this.onValueChange(values)} />
+                              <span>Montant *</span>
+                              {
+                                msg.fildsMsgHandler(this.state.errors,'montant_t')
+                              }
+                          </Label>
+                        </Col>
+                      </Row>
+                    </CardBody>    
+                </Card>
+              </Colxx>
+              <Colxx xxs="12" lg="6" className="mb-4">
+                <Card className="mb-4">
+                  <CardBody>
+                    <h2>Véhicules</h2>
+                    {
+                        vehicules ?
+                        <>
+                          {
+                              vehicules.length > 0 ?
+                              <>  
+                                  {
+                                      vehicules.map((r,i) => {
+                                      return (
+                                          <VehiculeListItem
+                                              key={i} 
+                                              data={r} 
+                                              addVehicule={this.addVehicule}
+                                              removeVehicule={this.removeVehicule}
+                                              remove={true}
+                                          />
+                                      )
+                                      })
+                                  }    
+                              </>
+                              :null
+                          }  
+                          </>
+                        :null
+                    }
+                    <Button Color="secondary" outline onClick={this.toggleVehiculeModal} className="mr-2">
+                      Ajouter
+                    </Button>
+                  </CardBody>
+                </Card>
+              </Colxx>
+          </Row>
+    
+        </Fragment>
+      
+    </Colxx>
+  </Row>
+</Fragment>
+
+{
+  vehicule_all ?
+  <AddVehicule
+    toggleModal={this.toggleVehiculeModal}
+    modalOpen={vehiculeModalOpen}
+    history={this.props.history}
+    vehicule_all={vehicule_all}
+    vehicules={vehicules}
+    addVehicule={this.addVehicule}
+    removeVehicule={this.removeVehicule}
+  />
+  :null
+}
+
+</>
     );
   }
 }
 
-  
-  const mapDispatchToProsps = dispatch => {
-    return {
-      dispatch:dispatch,
-      edit: (annonce_id, user_id, data) => actionsCreator.edit(annonce_id, user_id, data)
-    }
+const mapStateToProps = state => {
+  return {
+    user: state.AuthReducer.user
   }
+}
+  
+const mapDispatchToProsps = dispatch => {
+  return {
+    dispatch:dispatch,
+    edit: (annonce_id, user_id, data) => actionsCreator.edit(annonce_id, user_id, data),
+    detail: (id) => annonceActionsCreator.detail(id)
+  }
+}
 
-export default connect(null, mapDispatchToProsps)(AddProposition);
+export default connect(mapStateToProps, mapDispatchToProsps)(AddProposition);

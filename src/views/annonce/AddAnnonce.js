@@ -16,6 +16,7 @@ import {
   Badge
 } from "reactstrap";
 import Select from "react-select";
+import NumberFormat from 'react-number-format';
 
 import CustomSelectInput from "../../components/common/CustomSelectInput";
 
@@ -27,7 +28,7 @@ class AddAnnonce extends Component {
     super(props);
 
     this.state = {
-        title: null,
+        montant: null,
         body:null,
         marchandise: null,
         marchandise_all:[],
@@ -41,7 +42,7 @@ class AddAnnonce extends Component {
 
   handleNull = () => {
       this.setState({
-        title: "",
+        montant: "",
         body:"",
       });
   }
@@ -76,6 +77,13 @@ class AddAnnonce extends Component {
       })
   }
 
+  onValueChange = (values) => {
+    const {formattedValue, value} = values;
+    this.setState({
+      montant:value
+    })
+  }
+
   handleChangeLabelOver = (data,e) => {
     this.setState({ [e.name]:data, errors:null });
   };
@@ -86,7 +94,7 @@ class AddAnnonce extends Component {
     let { create, dispatch, history, user } = this.props
 
     const options = {
-      title: this.state.title,
+      montant: this.state.montant,
       body: this.state.body,
       marchandise_id: this.state.marchandise?this.state.marchandise.id:this.props.id,
       user_id: user.id,
@@ -140,10 +148,10 @@ class AddAnnonce extends Component {
                 <Row>
                     <Col sm={12}>
                         <Label className="form-group has-float-label">
-                            <Input type="text" name="title" value={this.state.title} onChange={this.handleChange} />
-                            <span>Titre *</span>
+                            <NumberFormat thousandSeparator={true} mask=" " customInput={Input} onValueChange={(values) => this.onValueChange(values)} />
+                            <span>Montant *</span>
                             {
-                              msg.fildsMsgHandler(this.state.errors,'title')
+                              msg.fildsMsgHandler(this.state.errors,'montant')
                             }
                         </Label>
                     </Col>

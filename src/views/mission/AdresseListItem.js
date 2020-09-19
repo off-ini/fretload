@@ -3,7 +3,7 @@ import {
     Card, Badge, Button, Collapse
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
-
+import APIModel from '../../models/APIModel';
 
 import ThumbnailImage from "../../components/cards/ThumbnailImage";
 
@@ -24,11 +24,11 @@ import ThumbnailImage from "../../components/cards/ThumbnailImage";
             {type ? type : null}
         </Badge>
       <div className="d-flex flex-grow-1 min-width-zero">
-        <NavLink to="/app/ui/cards" className="d-flex">
-            <ThumbnailImage src="/assets/img/chocolate-cake-thumb.jpg" alt="..." className="list-thumbnail responsive border-0 card-img-left" />
+        <NavLink to="#" className="d-flex">
+            <ThumbnailImage src={`${APIModel.URL}images/defaults/adresse.png`} alt="..." className="list-thumbnail responsive border-0 card-img-left" />
         </NavLink>
         <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-          <NavLink to="/app/ui/cards" className=" w-sm-100">
+          <NavLink to="#" className=" w-sm-100">
             <p className="list-item-heading mb-1 truncate">{data.name}</p>
           </NavLink>
           {/*<p className="mb-1 text-muted text-small w-15 w-sm-100">Cakes</p>

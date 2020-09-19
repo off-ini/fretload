@@ -15,6 +15,7 @@ import {
   Label
 } from "reactstrap";
 import Select from "react-select";
+import NumberFormat from 'react-number-format';
 
 import CustomSelectInput from "../../components/common/CustomSelectInput";
 
@@ -26,7 +27,7 @@ class EditAnnonce extends Component {
     super(props);
 
     this.state = {
-      title: null,
+      montant: null,
       body:null,
       marchandise: null,
       marchandise_all:null,
@@ -39,8 +40,8 @@ class EditAnnonce extends Component {
 
   handleNull = () => {
     this.setState({
-      title: "",
-        body:"",
+      montant: "",
+      body:"",
     });
   }
 
@@ -68,7 +69,7 @@ class EditAnnonce extends Component {
 
   setValues = (res) =>{
     this.setState({
-      title: res.title,
+      montant: res.montant,
       body: res.body,
       marchandise: this.state.marchandise_all.find(e => e.id === res.marchandise.id),
     })
@@ -81,6 +82,13 @@ class EditAnnonce extends Component {
     {
         this.setValues(annonce)
     }
+  }
+
+  onValueChange = (values) => {
+    const {formattedValue, value} = values;
+    this.setState({
+      montant:value
+    })
   }
 
   handleChange = (e) =>
@@ -101,7 +109,7 @@ class EditAnnonce extends Component {
     let { edit, dispatch, history, user, id } = this.props
 
     const options = {
-      title: this.state.title,
+      montant: this.state.montant,
       body: this.state.body,
       marchandise_id: this.state.marchandise?this.state.marchandise.id:null,
       user_id: user.id,
@@ -141,10 +149,10 @@ class EditAnnonce extends Component {
                 <Row>
                     <Col sm={12}>
                         <Label className="form-group has-float-label">
-                            <Input type="text" name="title" value={this.state.title} onChange={this.handleChange} />
-                            <span>Titre *</span>
+                            <NumberFormat thousandSeparator={true} mask=" " value={parseFloat(this.state.montant)} customInput={Input} onValueChange={(values) => this.onValueChange(values)} />
+                            <span>Montant *</span>
                             {
-                              msg.fildsMsgHandler(this.state.errors,'title')
+                              msg.fildsMsgHandler(this.state.errors,'montant')
                             }
                         </Label>
                     </Col>

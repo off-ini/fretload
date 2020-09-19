@@ -201,6 +201,7 @@ class AddMission extends Component {
       });
     }).catch(e => {
       msg.errorHandler(e,null,null)
+      this.props.history.push('/app/propostions');
     })
     .finally(() => this.setState({loading:false}));
   }

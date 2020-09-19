@@ -45,13 +45,6 @@ import ThumbnailLetters from "../../components/cards/ThumbnailLetters";
             </>
       }
       
-        <Badge
-            color="primary"
-            pill
-            className="position-absolute badge-top-left"
-        >
-            Status
-        </Badge>
       <CardBody>
         <h2 className="text-muted mb-2">
           {
