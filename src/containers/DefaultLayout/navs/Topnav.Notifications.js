@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux';
-import { UncontrolledDropdown, DropdownToggle, DropdownMenu } from "reactstrap";
+import { UncontrolledDropdown, DropdownToggle, DropdownMenu, Badge } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import Pusher from 'pusher-js';
 import moment from 'moment';
+import NumberFormat from 'react-number-format';
 
 import * as actions from '../../../store/actions/type';
 import * as actionsCreator from '../../../store/actions/NotificationActions';
@@ -23,13 +24,57 @@ const NotificationItem = ({n, onRead}) => {
           className="img-thumbnail list-thumbnail xsmall border-0 rounded-circle"
         />
       </NavLink>*/}
+      <>
+      {
+        data.type == 'mission'?
+        <img
+          src={'/assets/img/task.png'}
+          alt={data.type}
+          className="img-thumbnail list-thumbnail xsmall border-0 rounded-circle"
+        />
+        :
+        <>
+        {
+          data.type === 'proposition' ?
+            <img
+            src={'/assets/img/mongrol.png'}
+            alt={data.type}
+            className="img-thumbnail list-thumbnail xsmall border-0 rounded-circle"
+          />
+          :
+          <>
+          {
+            data.proposition.is_accept ?
+              <img
+                src={'/assets/img/accepted.png'}
+                alt={data.type}
+                className="img-thumbnail list-thumbnail xsmall border-0 rounded-circle"
+              />
+            :
+              <img
+                src={'/assets/img/refused.png'}
+                alt={data.type}
+                className="img-thumbnail list-thumbnail xsmall border-0 rounded-circle"
+              />
+          }
+          </>
+        }
+        </>
+      }
+      </>
       {
         data.type === 'mission' ?
           <div className="pl-3 pr-2">
+            <Badge
+              color="primary"
+              pill
+            >
+                Mission
+            </Badge>
             <NavLink to={`/app/${data.type}s`}>
               <p className="font-weight-medium mb-1">
                 {
-                  'Novelle mission' + ' - ' + data.mission.marchandise.label
+                  'Novelle mission' + ' - ' + data.mission.marchandise.libelle
                 }
               </p>
               <p className="text-muted mb-0 text-small">{moment(n.created_at).fromNow()}</p>
@@ -37,11 +82,19 @@ const NotificationItem = ({n, onRead}) => {
           </div>
         :
           <div className="pl-3 pr-2">
+            <Badge
+              color="primary"
+              pill
+            >
+              Proposition    
+            </Badge>
             <NavLink to={data.type === 'proposition' ? `/app/${data.type}s` : "propositions"}>
               <p className="font-weight-medium mb-1">
                 {
-                  data.proposition.annonce.title + ' - ' + data.proposition.montant_t
+                  data.proposition.annonce.marchandise.libelle + ' '
                 }
+                <NumberFormat value={parseInt(data.proposition.montant_t)} thousandSeparator={true} displayType={'text'} renderText={value => <>{value + ' '}</>} />
+                FCFA
               </p>
               <p className="text-muted mb-0 text-small">{moment(n.created_at).fromNow()}</p>
             </NavLink>

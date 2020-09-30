@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import axios from 'axios';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions/type';
@@ -7,19 +7,21 @@ import {
   Row,
   Col,
   Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Input,
-  Label
+  Label,
+  Card,
+  CardBody,
 } from "reactstrap";
 import Select from "react-select";
 
 import CustomSelectInput from "../../components/common/CustomSelectInput";
+import { Colxx, Separator } from "../../components/common/CustomBootstrap";
+import Breadcrumb from "../../containers/DefaultLayout/navs/Breadcrumb";
 
 import * as msg from '../../utils/messages';
 import APIModel from "../../models/APIModel";
+
+import Map from './Map';
 
 class EditAdresse extends Component {
   constructor(props) {
@@ -32,6 +34,21 @@ class EditAdresse extends Component {
       ville: null,
       adresse: null,
       pays_all:null,
+
+    /// Map State
+      viewport: {
+        latitude: 6.1470,
+        longitude: 1.2522,
+        zoom: 12
+      },
+
+      marker:{
+        lat:0,
+        lng:0,
+        place:"",
+        show:false
+      },
+    /////////////
 
       loading:false,
       validing:false,
@@ -47,13 +64,80 @@ class EditAdresse extends Component {
     });
   }
 
+  //// Map Function
+
+  handleViewportChange = viewport => {
+    this.setState({
+      viewport: { ...this.state.viewport, ...viewport }
+    })
+  }
+
+  onSelected = (viewport, item) => {      
+    this.setState({
+      viewport:{
+        latitude:viewport.latitude,
+        longitude:viewport.longitude,
+        zoom: 12
+      },
+      marker:{
+        lat:viewport.latitude,
+        lng:viewport.longitude,
+        place:item.place_name,
+        show:true
+      },
+      adresse:item.place_name
+    })
+  }
+
+  onClick = (viewport, item) => {
+    this.setState({
+      marker:{
+        lat:viewport.lngLat[1],
+        lng:viewport.lngLat[0],
+        place:"",
+        show:true
+      }
+    })
+  }
+
+  onDblClick = (viewport, item) => {
+    this.setState({
+      marker:{
+        lat:0,
+        lng:0,
+        place:"",
+        show:false
+      }
+    })
+  }
+
+  onGeolocate = (viewport, item) => {
+    this.setState({
+      marker:{
+        lat:viewport.coords.latitude,
+        lng:viewport.coords.longitude,
+        place:"",
+        show:false
+      }
+    })
+  }
+
+  handleAdresse = (adresse) => {
+    this.setState({adresse});
+  }
+
+  ////////////////
+
   componentDidMount()
   {
     this.pays();
+    this.get();
+    this.detail();
   }
 
   componentWillReceiveProps(nextProps) {
     this.get();
+    this.detail();
   }
   
 
@@ -76,16 +160,34 @@ class EditAdresse extends Component {
         pays: res.pays,
         ville: res.ville,
         adresse: res.adresse,
+
+        marker:{
+          lat:res.latitude,
+          lng:res.logitude,
+          place:"",
+        },
     })
   } 
 
   get = () => {
-    const {adresses, id} = this.props;
-    const adresse = adresses.find( v => v.id === id);
+    const {adresses, match: {params}} = this.props;
+    const adresse = adresses.find( v => v.id === params.id);
     if(adresse)
     {
         this.setValues(adresse)
     }
+  }
+
+  detail = () => {
+    const { match: {params}, detail, dispatch, history} = this.props;
+    detail(params.id)
+    .then(res => {
+      this.setValues(res.data)
+    }).catch(e => {
+      msg.errorHandler(e,dispatch, history)
+      this.props.history.push('/app/adresses');
+    })
+    .finally(() => this.setState({loading:false}));
   }
 
   handleChange = (e) =>
@@ -103,17 +205,19 @@ class EditAdresse extends Component {
   handleSubmit = (e) => {
     this.setState({validing:true});
 
-    let { edit, dispatch, history, user, id } = this.props
+    let { match: {params}, edit, dispatch, history, user } = this.props
 
     const options = {
       name: this.state.name,
       description: this.state.description,
       ville_id: this.state.ville?this.state.ville.id:null,
       adresse: this.state.adresse,
+      logitude: this.state.marker.lng,
+      latitude: this.state.marker.lat,
       user_id: user.id,
     };
     //console.log(options);
-    edit(id, options)
+    edit(params.id, options)
     .then(res => {
         dispatch({
           type:actions.EDIT_ADRESSE, 
@@ -130,24 +234,47 @@ class EditAdresse extends Component {
   }
 
 
-  render() {
-    const { modalOpen, toggleModal } = this.props;
-    return (
-      <Modal
-        isOpen={modalOpen}
-        toggle={toggleModal}
-        size="lg"
-        wrapClassName="modal-right"
-        backdrop="static"
-      >
-        <ModalHeader toggle={toggleModal}>
+render() {
+  return (
+<>
+<Fragment>
+  <Row className="">
+    <Colxx xxs="12">
+      <h1>
+        <i className="simple-icon-plus heading-icon" />{" "}
+        <span className="align-middle d-inline-block pt-1">
           Modifier Adresse
-        </ModalHeader>
-        <ModalBody>
-                <Row>
+        </span>
+      </h1>
+      <div className="text-zero top-right-button-container">
+      <Button Color="secondary" outline >
+            Annuler
+          </Button>
+          <Button 
+              Color="primary" 
+              className={`btn-shadow btn-multiple-state ${this.state.validing ? "show-spinner" : ""}`}
+              onClick={() => this.handleSubmit()}>
+              <span className="spinner d-inline-block">
+                <span className="bounce1" />
+                <span className="bounce2" />
+                <span className="bounce3" />
+              </span>
+          <span className="label">Valider</span>
+          </Button>
+      </div>
+      
+      <Breadcrumb match={this.props.match} />
+      <Separator className="mb-5" />
+
+        <Fragment>
+          <Row>
+              <Colxx xxs="12" lg="4" className="mb-4">
+                <Card className="mb-4">
+                  <CardBody>
+                  <Row>
                     <Col sm={12}>
                         <Label className="form-group has-float-label">
-                            <Input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
+                            <Input type="text" name="name" value={this.state.name} onChange={this.handleChange}  invalid/>
                             <span>Libelle *</span>
                             {
                               msg.fildsMsgHandler(this.state.errors,'name')
@@ -193,6 +320,21 @@ class EditAdresse extends Component {
                     </Col>
                 </Row>
                 <Row>
+                    <Col sm={6}>
+                        <Label className="form-group has-float-label">
+                          <Input type="text" name="latitude" value={this.state.marker.lat} readOnly />
+                          <span>Latitude</span>
+                        </Label>
+                    </Col>
+
+                    <Col sm={6}>
+                        <Label className="form-group has-float-label">
+                          <Input type="text" name="longitude" value={this.state.marker.lng} readOnly />
+                          <span>Longitude</span>
+                        </Label>
+                    </Col>
+                </Row>
+                <Row>
                     <Col sm={12}>
                         <Label className="form-group has-float-label">
                           <Input type="text" name="adresse" value={this.state.adresse} onChange={this.handleChange} />
@@ -207,25 +349,31 @@ class EditAdresse extends Component {
                         </Label>
                     </Col>
                 </Row>
-        </ModalBody>
-        <ModalFooter>
-          <Button Color="secondary" outline onClick={toggleModal}>
-            Annuler
-          </Button>
-          <Button 
-              Color="primary" 
-              className={`btn-shadow btn-multiple-state ${this.state.validing ? "show-spinner" : ""}`}
-              onClick={() => this.handleSubmit()}>
-              <span className="spinner d-inline-block">
-                <span className="bounce1" />
-                <span className="bounce2" />
-                <span className="bounce3" />
-              </span>
-          <span className="label">Valider</span>
-          </Button>
-        </ModalFooter>
-      </Modal>
-    );
+        
+                    </CardBody>    
+                </Card>
+              </Colxx>
+              <Colxx xxs="12" lg="8" className="mb-4">
+                   <Map 
+                      viewport={this.state.viewport}
+                      marker={this.state.marker}
+                      onClick={this.onClick}
+                      onDblClick={this.onDblClick}
+                      onSelected={this.onSelected}
+                      onGeolocate={this.onGeolocate}
+                      handleAdresse={this.handleAdresse}
+                   />
+              </Colxx>
+          </Row>
+    
+        </Fragment>
+      
+    </Colxx>
+  </Row>
+</Fragment>
+
+</>
+  );
   }
 }
 
@@ -239,7 +387,8 @@ class EditAdresse extends Component {
   const mapDispatchToProsps = dispatch => {
     return {
       dispatch:dispatch,
-      edit: (id, data) => actionsCreator.edit(id, data)
+      edit: (id, data) => actionsCreator.edit(id, data),
+      detail: (id) => actionsCreator.detail(id)
     }
   }
 

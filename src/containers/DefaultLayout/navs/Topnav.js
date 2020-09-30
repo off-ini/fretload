@@ -304,19 +304,18 @@ class TopNav extends Component {
           <div className="user d-inline-block">
             <UncontrolledDropdown className="dropdown-menu-right">
               <DropdownToggle className="p-0" color="empty">
-                <span className="name mr-1">{this.props.user.name +' - ' + this.props.user.code}</span>
+                <span className="name mr-1">{this.props.user.name +' ' + this.props.user.f_name}</span>
                 <span>
                   {
                     this.props.user.photo ?
                     <img alt="Profile" src={`${APIModel.URL}images/${this.props.user.photo}`} />
                     :
-                    <img alt="Profile" src="/assets/img/profile-pic-9.jpg" />
+                    <img alt="Profile" src="/assets/img/user.png" />
                   }
                 </span>
               </DropdownToggle>
               <DropdownMenu className="mt-3" right>
-                <DropdownItem divider />
-                <DropdownItem>Account</DropdownItem>
+                <DropdownItem><NavLink to='/app/user/profil'>Profile</NavLink></DropdownItem>
                 <DropdownItem divider />
                 <Logout />
               </DropdownMenu>

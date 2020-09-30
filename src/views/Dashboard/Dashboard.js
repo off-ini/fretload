@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Row, Card, CardBody } from "reactstrap";
 import { Colxx, Separator } from "../../components/common/CustomBootstrap";
 import Breadcrumb from "../../containers/DefaultLayout/navs/Breadcrumb";
+import IconCard from "../../components/cards/IconCard";
 import Pagination from "react-js-pagination";
 import Pusher from 'pusher-js';
 
@@ -24,6 +25,7 @@ class Dashboard extends Component {
       id:null,
       annonce_id:null,
       annonce_news:[],
+      mission:null,
 
       activePage: 1,
       itemsCountPerPage: 1,
@@ -34,6 +36,7 @@ class Dashboard extends Component {
 
   componentDidMount = () => {
     this.all();
+    this.mission();
     this.annonce_news();
     this.push();
   };
@@ -47,6 +50,20 @@ class Dashboard extends Component {
           annonce_news
         })
     }
+  }
+
+  mission = () => {
+    this.setState({loading:true});
+    let { dispatch, history } = this.props;
+    axios.get(APIModel.HOST + "missions/statistics")
+          .then(res => {
+            this.setState({mission:res.data}, () => {
+            });
+          })
+          .catch(e => {
+            msg.errorHandler(e,dispatch,history)
+          })
+          .finally(() => this.setState({loading:false}));
   }
 
   all = () =>
@@ -89,7 +106,6 @@ class Dashboard extends Component {
     var channel = pusher.subscribe('channel-annonce');
     channel.bind('event-annonce',
       function(data) {
-        console.log(data.data);
         if(user.id > 2)
         {
           dispatch({
@@ -128,7 +144,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { propositionModalOpen } = this.state;
+    const { propositionModalOpen, mission } = this.state;
     const {annonces} = this.props; 
 
     return (
@@ -141,12 +157,19 @@ class Dashboard extends Component {
           </Colxx>
         </Row>
         <Row>
-          <Colxx xxs="12" lg="6" className="mb-4">
-            
+          <Colxx xxs="6" lg="3" className="mb-4 icon-cards-row" >
+            <IconCard title='Missions en cours' icon="iconsminds-reset" value={mission ? mission.load : 0} className="mb-4" />
           </Colxx>
-          <Colxx xxs="12" lg="6" className="mb-4 white">
-            <Card className="mb-4">
-              <CardBody>
+          <Colxx xxs="6" lg="3" className="mb-4 icon-cards-row">
+            <IconCard title='Missions Terminer' icon="iconsminds-yes" value={mission ? mission.end : 0} className="mb-4" />
+          </Colxx>
+          <Colxx xxs="6" lg="3" className="mb-4 icon-cards-row">
+            <IconCard title='Tout les Missions' icon="iconsminds-thunder" value={mission ? mission.all : 0} className="mb-4" />
+          </Colxx>
+          <Colxx xxs="6" lg="3" className="mb-4 icon-cards-row">
+            <IconCard title='Mission Payer' icon="iconsminds-financial" value={mission ? mission.paided : 0} className="mb-4" />
+          </Colxx>
+          <>
               {
                   annonces.length > 0 ?
                   <>
@@ -181,9 +204,7 @@ class Dashboard extends Component {
                       </>
                   :null
               }
-              </CardBody> 
-            </Card>
-          </Colxx>
+           </>   
         </Row>
       </Fragment>
       </>

@@ -14,13 +14,14 @@ import {
 
 } from "reactstrap";
 import Pagination from "react-js-pagination";
+import { NavLink } from "react-router-dom";
 
 import { Colxx, Separator } from "../../components/common/CustomBootstrap";
 import Breadcrumb from "../../containers/DefaultLayout/navs/Breadcrumb";
 
 import * as msg from '../../utils/messages';
 
-import AddAdresse from './AddAdresse';
+//import AddAdresse from './AddAdresse';
 import EditAdresse from './EditAdresse';
 import AdresseListItem from './AdresseListItem';
 //import AdresseMenu from './AdresseMenu';
@@ -119,15 +120,16 @@ class Adresse extends Component {
 
                 <div className="text-zero top-right-button-container">
                 <Can I="add" a="Adresses">
+                  <NavLink to="/app/adresses/add">
                     <Button
-                        color="primary"
-                        size="lg"
-                        className="top-right-button mr-1"
-                        onClick={this.toggleAddModal}
-                    >
-                        Ajouter
-                    </Button>
-                  </Can >
+                          color="primary"
+                          size="lg"
+                          className="top-right-button mr-1"
+                      >
+                          Ajouter
+                      </Button>
+                  </NavLink>
+                </Can >
                 </div>
             
                 <Breadcrumb match={this.props.match} />
@@ -224,7 +226,7 @@ class Adresse extends Component {
           </Colxx>
         </Row>
         
-        {/*<AdresseMenu />*/}
+        {/*<AdresseMenu />
         <Can I="add" a="Adresses">
           <AddAdresse
             toggleModal={this.toggleAddModal}
@@ -233,6 +235,7 @@ class Adresse extends Component {
             user={this.props.user}
           />
         </Can>
+        
         <Can I="edit" a="Adresses">
           <EditAdresse
             toggleModal={this.toggleEditModal}
@@ -241,7 +244,7 @@ class Adresse extends Component {
             id={this.state.id}
           />
         </Can>
-
+          */}
     </Fragment>
     )
   }

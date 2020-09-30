@@ -19,7 +19,7 @@ import Breadcrumb from "../../containers/DefaultLayout/navs/Breadcrumb";
 import * as msg from '../../utils/messages';
 
 import MissionListItem from './MissionListItem';
-import MissionMenu from './MissionMenu';
+//import MissionMenu from './MissionMenu';
 
 class Mission extends Component {
     constructor(props) {
@@ -117,7 +117,7 @@ class Mission extends Component {
     const {missions} = this.props; 
     return (
     <Fragment>
-        <Row className="app-row">
+        <Row className="">
           <Colxx xxs="12">
             <div className="mb-2">
                 <h1>
@@ -217,7 +217,7 @@ class Mission extends Component {
           </Colxx>
         </Row>
         
-        <MissionMenu />
+        {/*<MissionMenu />*/}
     </Fragment>
     )
   }

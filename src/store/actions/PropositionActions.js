@@ -14,7 +14,7 @@ export const detail = (id) => {
 };
 
 export const detailByAnnonceAndUser = (annonce_id, user_id) => {
-  return axios.get(APIModel.HOST + "propositions/" + annonce_id +'/'+ user_id);
+  return axios.get(APIModel.HOST + "propositions/annoncebyuser/" + annonce_id +'/'+ user_id);
 };
 
 export const create = (data) => {

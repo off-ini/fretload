@@ -25,7 +25,7 @@ import ThumbnailLetters from "../../components/cards/ThumbnailLetters";
             />
           :
           <img
-            src={`/assets/img/profile-pic-2.jpg`}
+            src={`/assets/img/user.png`}
             alt="Detail"
             className="card-img-top"
           />

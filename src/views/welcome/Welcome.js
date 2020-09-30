@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
 
 export default class Welcome extends Component {
+  componentWillMount() {
+    const {history} = this.props;
+    history.push('/app');
+  }
+  
   render() {
     return (
       <>

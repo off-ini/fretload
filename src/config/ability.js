@@ -33,6 +33,7 @@ function defineRulesFor(auth) {
   can("view", "ModePayements");
   can("view", "TypeMarchandises");
   can("view", "TypeVehicules");
+  can("view", "Profils");
 
   if (auth.roles.find(e => e === 'Admin')) {
     can("user", "Admin");

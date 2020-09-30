@@ -45,7 +45,10 @@ const AdresseListItem = ({data, toggleEditModal, handleDelete}) => {
             </p>
           <div className="mb-0">
           <Can I="edit" a="Adresses">
-            <Button outline size="xs" color="info" onClick={() => toggleEditModal(data.id)}><i className="iconsminds-pen-2"></i></Button>
+            <NavLink to={`/app/adresses/edit/${data.id}`}>
+              <Button outline size="xs" color="info" ><i className="iconsminds-pen-2"></i></Button>
+            </NavLink>
+            
           </Can>
           <Can I="delete" a="Adresses">
             <Button outline size="xs" color="danger" onClick={() => handleDelete(data.id)}><i className="simple-icon-trash"></i></Button>

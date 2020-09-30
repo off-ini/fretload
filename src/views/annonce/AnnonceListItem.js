@@ -49,52 +49,66 @@ const AnnonceListItem = ({data, toggleEditModal, user, annonce_news = [], show, 
     <div className="d-flex flex-grow-1 min-width-zero">
       {
         data.marchandise.image ? 
-        <ThumbnailImage src={`${APIModel.URL}images/defaults/${data.marchandise.image}`} alt="..." className="list-thumbnail responsive border-0 card-img-left" />
+        <ThumbnailImage src={`${APIModel.URL}images/${data.marchandise.image}`} alt="..." className="list-thumbnail responsive border-0 card-img-left" />
         :
         <ThumbnailImage src={`${APIModel.URL}images/defaults/annonce.png`} alt="..." className="list-thumbnail responsive border-0 card-img-left" />
       }
 
       <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-        <NavLink to="#" className="w-40 w-sm-100">
-          <p className="list-item-heading mb-1 truncate">
-            {data.marchandise.libelle}
+      <Row className="m-0" style={{width:'100%'}}>
+        <Colxx md="6" sm="6" lg="6" xxs="12" >
+          <NavLink to="#" className="">
+            <p className="list-item-heading mb-1">
+              {data.marchandise.libelle}
+            </p>
+          </NavLink>
+        </Colxx>
+        <Colxx md="6" sm="6" lg="6" xxs="12" >
+          <p className="list-item-heading mb-1">
+            <NumberFormat value={parseFloat(data.montant)} mask=" " thousandSeparator={true} displayType={'text'} renderText={value => <>{value + ' '}</>} /> FCFA
           </p>
-        </NavLink>
-        
-        <p className="list-item-heading mb-1 truncate">
-          <NumberFormat value={parseFloat(data.montant)} mask=" " thousandSeparator={true} displayType={'text'} renderText={value => <>{value + ' '}</>} /> FCFA
-        </p>
+        </Colxx>
+      </Row>
       </div>
     
       <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-        
-        {/*<p className="mb-1 text-muted text-small w-15 w-sm-100">Cakes</p>
-        <p className="mb-1 text-muted text-small w-15 w-sm-100">09.04.2018</p>*/}
-        {
-          data.marchandise ?
-          <p className="mb-1 text-muted">Type: {`${data.marchandise.type.libelle}`}</p>
-          :null
-        }
-
-        {
-          data.marchandise.adresse_depart ?
-            <p className="list-item-heading mb-1 truncate">
-              Départ: {data.marchandise.adresse_depart.pays.label + ", " + data.marchandise.adresse_depart.ville.label}
-            </p>
-          :null
-        }
-
-        {
-          data.marchandise.adresse_arriver?
-            <p className="list-item-heading mb-1 truncate">
-              Arrivée: {data.marchandise.adresse_arriver.pays.label + ", " + data.marchandise.adresse_arriver.ville.label}
-            </p>
-          :null
-        }
-        <p className="mb-1 text-muted text-small w-15 w-sm-100">{moment(data.created_at).fromNow()}</p>
+          <Row className="m-0" style={{width:'100%'}}>
+              {
+                  data.marchandise ?
+                  <Colxx md="4" sm="4" lg="4" xxs="12" >
+                      <p className="text-muted text-small mb-2">
+                          Type
+                      </p>
+                      <p className="mb-3">{`${data.marchandise.type.libelle}`}</p>
+                  </Colxx>
+                  :
+                  null
+              }
+              {
+                  data.marchandise.adresse_depart ?
+                  <Colxx md="4" sm="4" lg="4" xxs="12" >
+                      <p className="text-muted text-small mb-2">
+                      Départ
+                      </p>
+                      <p className="mb-3">{data.marchandise.adresse_depart.pays.label + ", " + data.marchandise.adresse_depart.ville.label}</p>
+                  </Colxx>
+                  :null
+              }
+              {
+                  data.marchandise.adresse_arriver ?
+                  <Colxx md="4" sm="4" lg="4" xxs="12" >
+                      <p className="text-muted text-small mb-2">
+                        Arrivée
+                      </p>
+                      <p className="mb-3">{data.marchandise.adresse_arriver.pays.label + ", " + data.marchandise.adresse_arriver.ville.label}</p>
+                  </Colxx>
+                  :null
+              }
+          </Row>
       </div>
-      <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-        <p className="mb-1 text-muted text-small w-15 w-sm-100"> 
+      <div className="align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+         <p className="mb-1 text-muted text-small ">{moment(data.created_at).fromNow()}</p>
+        <p className="mb-1 text-muted text-small "> 
             <Button
               color="link"
               onClick={() => toggleAccordion()}
@@ -139,7 +153,7 @@ const AnnonceListItem = ({data, toggleEditModal, user, annonce_news = [], show, 
       </div>
     </div>
     <Collapse isOpen={d.accordion}>
-        <Row className="m-5">
+        <Row className="m-1">
             <Colxx md="4" sm="6" lg="4" xxs="12" >
                 <MarchandiseListItem
                   data={data.marchandise}
