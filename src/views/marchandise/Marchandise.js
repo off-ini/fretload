@@ -122,7 +122,7 @@ class Marchandise extends Component {
     const {marchandises} = this.props; 
     return (
     <Fragment>
-        <Row className="app-row">
+        <Row className="">
           <Colxx xxs="12">
             <div className="mb-2">
                 <h1>
@@ -238,7 +238,7 @@ class Marchandise extends Component {
           </Colxx>
         </Row>
         
-        <MarchandiseMenu />
+        {/*<MarchandiseMenu />*/}
         <Can I="add" a="Marchandises">
           <AddMarchandise
             toggleModal={this.toggleAddModal}

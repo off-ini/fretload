@@ -109,7 +109,7 @@ class Vehicule extends Component {
     const {vehicules} = this.props; 
     return (
     <Fragment>
-        <Row className="app-row">
+        <Row className="">
           <Colxx xxs="12">
             <div className="mb-2">
                 <h1>
@@ -223,7 +223,7 @@ class Vehicule extends Component {
           </Colxx>
         </Row>
         
-        <VehiculeMenu />
+        {/*<VehiculeMenu />*/}
         <Can I="add" a="Vehicules">
           <AddVehicule
             toggleModal={this.toggleAddModal}

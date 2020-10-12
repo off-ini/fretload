@@ -12,6 +12,11 @@ import Can from '../../config/Can';
 import { Colxx } from "../../components/common/CustomBootstrap";
 import ThumbnailLetters from "../../components/cards/ThumbnailLetters";
 
+const status = [
+  {id:0, color: 'success', name:'Libre'},
+  {id:1, color: 'warning', name:'En Cours'},
+];
+
  const VehiculeListItem = ({data, toggleEditModal, handleDelete}) => {
   return (
 <>
@@ -52,11 +57,13 @@ import ThumbnailLetters from "../../components/cards/ThumbnailLetters";
             </>
       }
         <Badge
-            color="primary"
+            color={status[data.status].color}
             pill
             className="position-absolute badge-top-left"
         >
-            Status
+            {
+              status[data.status].name
+            }
         </Badge>
       <CardBody>
         <h2 className="text-muted mb-2">

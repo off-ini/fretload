@@ -1,4 +1,9 @@
 class APIModel {
+    //static HOST = "https://api.fretload.com/api/v1/";
+    //static URL = "https://api.fretload.com/";
+
+    //static APP_URL = "https://app.fretload.com/";
+
     static HOST = "https://fretapi.herokuapp.com/api/v1/";
     static URL = "https://fretapi.herokuapp.com/";
 

@@ -84,7 +84,7 @@ class MPayement extends Component {
       }, () => {
         this.setState({editModalOpen: !this.state.editModalOpen})
       });
-  };
+    };
 
   handlePageChange = (pageNumber) => {
     //console.log(`active page is ${pageNumber}`);

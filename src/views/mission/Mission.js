@@ -21,6 +21,9 @@ import * as msg from '../../utils/messages';
 import MissionListItem from './MissionListItem';
 //import MissionMenu from './MissionMenu';
 
+
+import PayementMission from './PayementMission';
+
 class Mission extends Component {
     constructor(props) {
         super(props);
@@ -30,11 +33,13 @@ class Mission extends Component {
             addModalOpen: false,
             annonceModalOpen: false,
             editModalOpen: false,
+            payementModalOpen: false,
             lastChecked: null,
             status: "ACTIVE",
             displayOptionsIsOpen: false,
             id:null,
             mission_id:null,
+            mission_payement_id:null,
 
             activePage: 1,
             itemsCountPerPage: 1,
@@ -93,7 +98,16 @@ class Mission extends Component {
       }, () => {
         this.setState({editModalOpen: !this.state.editModalOpen})
       });
-  };
+    };
+
+    togglePayementModal = (mission_payement_id) => {
+      console.log({mission_payement_id});
+      this.setState({
+        mission_payement_id
+      }, () => {
+        this.setState({payementModalOpen: !this.state.payementModalOpen})
+      });
+    };
 
   handlePageChange = (pageNumber) => {
     //console.log(`active page is ${pageNumber}`);
@@ -114,8 +128,10 @@ class Mission extends Component {
   }
 
   render() {
+    const {mission_payement_id, payementModalOpen} = this.state;
     const {missions} = this.props; 
     return (
+<>
     <Fragment>
         <Row className="">
           <Colxx xxs="12">
@@ -193,6 +209,7 @@ class Mission extends Component {
                                     key={i} 
                                     data={r} 
                                     handleDelete={this.handleDelete}
+                                    togglePayementModal={this.togglePayementModal}
                                 />
                             )
                             })
@@ -219,6 +236,14 @@ class Mission extends Component {
         
         {/*<MissionMenu />*/}
     </Fragment>
+   
+    <PayementMission 
+      id={mission_payement_id}
+      toggleModal={this.togglePayementModal}
+      modalOpen={payementModalOpen}
+    />
+      
+</>
     )
   }
 }

@@ -205,12 +205,33 @@ class AddMission extends Component {
   handleChangeStart = date => {
     this.setState({
       date_depart_pre: date
+    }, () => {
+      const {date_depart_pre, date_arriver_pre} = this.state;
+      if(date_depart_pre && date_arriver_pre){
+        if(new Date(date_depart_pre).getTime() > new Date(date_arriver_pre).getTime())
+        {
+          this.setState({
+            date_arriver_pre:null
+          });
+        }
+      }
     });
   };
 
   handleChangeEnd = date => {
     this.setState({
       date_arriver_pre: date
+    }, () => {
+      const {date_depart_pre, date_arriver_pre} = this.state;
+      if(date_depart_pre && date_arriver_pre)
+      {
+        if(new Date(date_depart_pre).getTime() > new Date(date_arriver_pre).getTime())
+        {
+          this.setState({
+            date_arriver_pre:null
+          });
+        }
+      }
     });
   };
 
@@ -257,6 +278,7 @@ class AddMission extends Component {
         });
         this.handleNull();
         msg.successHandler(msg.SUCCESS_TITLE, msg.ADD_SUCCESS);
+        history.push('/app/missions');
     })
     .catch(e => {
       msg.errorHandler(e, dispatch, history, msg.ERROR_TITLE, msg.ADD_ERROR);
@@ -411,8 +433,8 @@ class AddMission extends Component {
                                     </Col>
                                     <Col sm={12}>
                                         <Label className="form-group has-float-label">
-                                            <Input type="text" name="montant" value={this.state.montant} onChange={this.handleChange} />
-                                            <span>Montant *</span>
+                                            <Input type="text" name="montant" readOnly value={this.state.montant} onChange={this.handleChange} />
+                                            <span>Montant (FCFA) *</span>
                                             {
                                               msg.fildsMsgHandler(this.state.errors,'montant')
                                             }

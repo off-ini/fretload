@@ -118,7 +118,18 @@ class AddMarchandise extends Component {
   }
 
   handleChangeLabelOver = (data,e) => {
-    this.setState({ [e.name]:data, errors:null });
+    this.setState({ [e.name]:data, errors:null },()=> {
+      const {adresse_depart, adresse_arrivee} = this.state
+      if(adresse_depart && adresse_arrivee)
+      {
+        if(adresse_depart.id == adresse_arrivee.id)
+        {
+          this.setState({
+            adresse_arrivee:null
+          })
+        }
+      }
+    });
   };
 
   handleFile = (file) => {
@@ -211,14 +222,14 @@ class AddMarchandise extends Component {
                     <Col sm={4} md={4} xl={4} xs={4}>
                         <Label className="form-group has-float-label">
                           <Input type="text" name="poid" value={this.state.poid} onChange={this.handleChange} />
-                            <span>Poid</span>
+                            <span>Poid (Tone)</span>
                         </Label>
                     </Col>
 
                     <Col sm={4} md={4} xl={4} xs={4}>
                         <Label className="form-group has-float-label">
                           <Input type="text" name="volume" value={this.state.volume} onChange={this.handleChange} />
-                            <span>Volume</span>
+                            <span>Volume (m<sup>3</sup>)</span>
                         </Label>
                     </Col>
                 </Row>

@@ -76,6 +76,8 @@ function defineRulesFor(auth) {
     can("view", "Propositions");
 
     can("view", "Missions");
+    can('button', 'payer');
+    can('button', 'next');
   }
   if (auth.roles.find(e => e === 'Transporteur')) {
     can("user", "Transporteur");
@@ -98,28 +100,41 @@ function defineRulesFor(auth) {
     can("view", "ADDMissions");
     can("view", "EDITMissions");
     can("delete", "Missions");
+    
+    can('action', 'charger');
+    can('action', 'livrer');
+    can('action', 'payer');
+
+    can('button', 'charger');
+    can('button', 'livrer');
+    can('button', 'next');
   }
   if (auth.roles.find(e => e === 'Chauffeur')) {
     can("user", "Chauffeur");
 
-    can("view", "Vehicules");
+    /*can("view", "Vehicules");
     can("add", "Vehicules");
     can("edit", "Vehicules");
-    can("delete", "Vehicules");
+    can("delete", "Vehicules");*/
 
     can("view", "Annonces");
 
-    can("view", "Propositions");
+    /*can("view", "Propositions");
     can("view", "ADDPropositions");
     can("view", "EDITPropositions");
     can("add", "Propositionss");
     can("edit", "Propositions");
-    can("delete", "Propositions");
+    can("delete", "Propositions");*/
 
     can("view", "Missions");
-    can("view", "ADDMissions");
-    can("view", "EDITMissions");
-    can("delete", "Missions");
+
+    can('action', 'charger');
+    can('action', 'livrer');
+    can('action', 'payer');
+
+    can('button', 'charger');
+    can('button', 'livrer');
+    can('button', 'next');
   }
   return rules
 }

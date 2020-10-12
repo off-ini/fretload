@@ -18,6 +18,7 @@ const AddProposition = React.lazy(() => import('./views/proposition/AddPropositi
 const EditProposition = React.lazy(() => import('./views/proposition/EditProposition'));
 const Mission = React.lazy(() => import('./views/mission/Mission'));
 const Tracker = React.lazy(() => import('./views/mission/Tracker'));
+const StreamMap = React.lazy(() => import('./views/mission/Stream'));
 const AddMission = React.lazy(() => import('./views/mission/AddMission'));
 const EditMission = React.lazy(() => import('./views/mission/EditMission'));
 
@@ -40,6 +41,7 @@ export default [
   { path: "/app/propositions/add/:id", name: "Add Proposition", tag:'ADDPropositions', component: AddProposition },
   { path: "/app/propositions/edit/:id", name: "Edit Proposition", tag:'EDITPropositions', component: EditProposition },
   { path: "/app/missions", exact: true, name: "Mission", tag:'Missions', component: Mission },
+  { path: "/app/missions/stream/:id", name: "Stream", tag:'Missions', component: StreamMap },
   { path: "/app/missions/tracker", name: "Tracker", tag:'Missions', component: Tracker },
   { path: "/app/missions/add/:id", name: "Add Mission", tag:'ADDMissions', component: AddMission },
   { path: "/app/missions/edit/:id", name: "Edit Mission", tag:'EDITMissions', component: EditMission },

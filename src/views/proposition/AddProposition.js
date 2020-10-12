@@ -160,6 +160,7 @@ class AddProposition extends Component {
         });
         this.handleNull();
         msg.successHandler(msg.SUCCESS_TITLE, msg.ADD_SUCCESS);
+        history.push('/app/propositions');
     })
     .catch(e => {
       msg.errorHandler(e, dispatch, history, msg.ERROR_TITLE, msg.ADD_ERROR);
@@ -221,7 +222,7 @@ class AddProposition extends Component {
                         <Col sm={12}>
                           <Label className="form-group has-float-label">
                               <NumberFormat thousandSeparator={true} mask=" " value={parseFloat(this.state.montent_t)} customInput={Input} onValueChange={(values) => this.onValueChange(values)} />
-                              <span>Montant *</span>
+                              <span>Montant (FCFA) *</span>
                               {
                                 msg.fildsMsgHandler(this.state.errors,'montant_t')
                               }

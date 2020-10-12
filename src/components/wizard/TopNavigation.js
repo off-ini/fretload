@@ -24,6 +24,15 @@ export class TopNavigation extends Component {
       }
       this.props.topNavClick(stepItem, push)
     }
+
+    virtualClick = (e) => {
+     console.log({e});
+     let btn = document.getElementById('top'+e);
+      if(btn)
+      {
+        btn.click();
+      }
+    }
   
     render() {
       return (
@@ -34,7 +43,15 @@ export class TopNavigation extends Component {
                 if (!stepItem.hideTopNav) {
                   return (
                     <li key={index} className={"nav-item " + this.getClassName(steps, step, index, stepItem)}>
-                      <NavLink to="#" className="nav-link" onClick={()=> this.itemClick(stepItem, push)}>
+                      <NavLink to="#" className="nav-link"
+                        id={'top'+index}
+                        onClick={
+                          (e)=> {
+                          this.itemClick(stepItem, push)
+                        },
+                        index == this.props.index ? this.virtualClick(index) :null
+                      }
+                      >
                         <span>{stepItem.name}</span>
                         <small>{stepItem.desc}</small>
                       </NavLink>
@@ -44,7 +61,13 @@ export class TopNavigation extends Component {
                   return <Fragment key={index} />
                 }
               })
+              
             }
+            <>
+            {/*
+              this.virtualClick(this.props.index)
+            */}
+            </>
           </ul>
         )} />
       )
