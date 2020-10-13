@@ -173,7 +173,7 @@ class EditProposition extends Component {
       <h1>
         <i className="simple-icon-plus heading-icon" />{" "}
         <span className="align-middle d-inline-block pt-1">
-          Nouvelle Proposition
+          Modifier Proposition
         </span>
       </h1>
       <div className="text-zero top-right-button-container">

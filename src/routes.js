@@ -17,6 +17,7 @@ const Proposition = React.lazy(() => import('./views/proposition/Proposition'));
 const AddProposition = React.lazy(() => import('./views/proposition/AddProposition'));
 const EditProposition = React.lazy(() => import('./views/proposition/EditProposition'));
 const Mission = React.lazy(() => import('./views/mission/Mission'));
+const MissionPaided = React.lazy(() => import('./views/mission/MissionPaided'));
 const Tracker = React.lazy(() => import('./views/mission/Tracker'));
 const StreamMap = React.lazy(() => import('./views/mission/Stream'));
 const AddMission = React.lazy(() => import('./views/mission/AddMission'));
@@ -43,6 +44,7 @@ export default [
   { path: "/app/missions", exact: true, name: "Mission", tag:'Missions', component: Mission },
   { path: "/app/missions/stream/:id", name: "Stream", tag:'Missions', component: StreamMap },
   { path: "/app/missions/tracker", name: "Tracker", tag:'Missions', component: Tracker },
+  { path: "/app/missions/paided", name: "Paided", tag:'Paided', component: MissionPaided },
   { path: "/app/missions/add/:id", name: "Add Mission", tag:'ADDMissions', component: AddMission },
   { path: "/app/missions/edit/:id", name: "Edit Mission", tag:'EDITMissions', component: EditMission },
 ];

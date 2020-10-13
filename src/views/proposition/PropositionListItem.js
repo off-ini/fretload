@@ -41,6 +41,16 @@ import VehiculeListItem from '../mission/VehiculeListItem';
               <NumberFormat value={parseFloat(data.montant_t)} thousandSeparator={true} displayType={'text'} renderText={value => <>{value + ' '}</>} /> FCFA
               </p>
             </NavLink>
+            {
+              data.montant_p ?
+              <NavLink to="#" className="w-40 w-sm-100">
+                <p className="list-item-heading mb-1 truncate">
+                <NumberFormat value={parseFloat(data.montant_p)} thousandSeparator={true} displayType={'text'} renderText={value => <>{value + ' '}</>} /> FCFA
+                </p>
+              </NavLink>
+              :null
+            }
+            
           </div>
           <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
             {
@@ -74,6 +84,13 @@ import VehiculeListItem from '../mission/VehiculeListItem';
               </p>
             <div className="mb-0">
               <Can I="user" a="Proprietaire">
+                {
+                  data.annonce ?
+                  <Button outline size="xs" color="info" onClick={() => toggleEditModal(data.annonce.id, data.user_id)} ><i className="iconsminds-pen-2"></i></Button>
+                  :null
+                }
+              </Can>
+              <Can I="user" a="Proprietaire">
                 <Switch
                     className="custom-switch custom-switch-primary"
                     checked={checked}
@@ -91,8 +108,7 @@ import VehiculeListItem from '../mission/VehiculeListItem';
                       </Button>
                     </NavLink>
                   :null
-                }
-                
+                }  
               </Can>
               <Can I="edit" a="Propositions">
                 <NavLink to={`/app/propositions/edit/${data.annonce ? data.annonce.id : '#' }`} >

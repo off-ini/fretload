@@ -184,6 +184,23 @@ class TopNavDisabled extends Component {
     this.setState({step});
   }
 
+  paiding = () => {
+    let { dispatch, history, user } = this.props;
+    let {mission} = this.state;
+
+    axios
+    .post(APIModel.HOST + "missions/paiding/"+user.id+"/"+mission.id)
+    .then(res => {
+      let identifier = new Date().getTime();
+      window.location.replace("https://paygateglobal.com/v1/page?token=44e087cf-2a90-4bf9-85af-3634a2054e73&amount=1&identifier="+identifier+"&url="+APIModel.HOST + "payements");
+    })
+    .catch(e => {
+        msg.errorHandler(e, dispatch, history);
+        this.setState({errors:e});
+    })
+    .finally(() => this.setState({validing:false}));
+  }
+
   displayBouton = () => {
     const {mission, charger, livrer , payer, step} = this.state;
 
@@ -221,7 +238,8 @@ class TopNavDisabled extends Component {
             {
               return (
                 <Can I="button" a="payer">
-                  <BottomNavigationM onClickNext={() => this.props.togglePayementModal(mission.id)} onClickPrev={this.onClickPrev} className="justify-content-center" prevLabel="Précédent" nextLabel="Valider"/>
+                  {/*<BottomNavigationM onClickNext={() => this.props.togglePayementModal(mission.id)} onClickPrev={this.onClickPrev} className="justify-content-center" prevLabel="Précédent" nextLabel="Valider"/>*/}
+                  <BottomNavigationM onClickNext={() => this.paiding()} onClickPrev={this.onClickPrev} className="justify-content-center" prevLabel="Précédent" nextLabel="Valider"/>
                 </Can>
               )
             }else if(step == 2 && payer)

@@ -204,7 +204,7 @@ class Marchandise extends Component {
                 {
                     marchandises.length > 0 ?
                     <>
-                          <Row>   
+                        <Row>   
                           {
                               marchandises.map((r,i) => {
                               return (
@@ -218,7 +218,7 @@ class Marchandise extends Component {
                               )
                               })
                           }    
-                          </Row>
+                        </Row>
                           <Pagination
                               activePage={this.state.activePage}
                               itemsCountPerPage={this.state.itemsCountPerPage}

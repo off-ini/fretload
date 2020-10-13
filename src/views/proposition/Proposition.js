@@ -21,9 +21,13 @@ import Breadcrumb from "../../containers/DefaultLayout/navs/Breadcrumb";
 import * as msg from '../../utils/messages';
 import APIModel from "../../models/APIModel";
 
-import AddProposition from './AddProposition';
-import EditProposition from './EditProposition';
+//import AddProposition from './AddProposition';
+//import EditProposition from './EditProposition';
+
+import Edit2Proposition from './Edit2Proposition';
 import PropositionListItem from './PropositionListItem';
+
+
 {/*import PropositionMenu from './PropositionMenu';*/}
 
 class Proposition extends Component {
@@ -34,10 +38,13 @@ class Proposition extends Component {
             dropdownSplitOpen: false,
             addModalOpen: false,
             editModalOpen: false,
+            edit2ModalOpen: false,
             lastChecked: null,
             status: "ACTIVE",
             displayOptionsIsOpen: false,
             id:null,
+            annonce_id:null,
+            user_id:null,
 
             activePage: 1,
             itemsCountPerPage: 1,
@@ -100,7 +107,16 @@ class Proposition extends Component {
       }, () => {
         this.setState({editModalOpen: !this.state.editModalOpen})
       });
-  };
+    };
+
+    toggleEdit2Modal = (annonce_id, user_id) => {
+      this.setState({
+        annonce_id:annonce_id,
+        user_id:user_id
+      }, () => {
+        this.setState({edit2ModalOpen: !this.state.edit2ModalOpen})
+      });
+    };
 
   handlePageChange = (pageNumber) => {
     //console.log(`active page is ${pageNumber}`);
@@ -121,9 +137,10 @@ class Proposition extends Component {
   }
 
   render() {
-    const { addModalOpen, editModalOpen } = this.state;
+    const { addModalOpen, editModalOpen, edit2ModalOpen, annonce_id, user_id } = this.state;
     const {propositions} = this.props; 
     return (
+<>
     <Fragment>
         <Row className="">
           <Colxx xxs="12">
@@ -214,7 +231,7 @@ class Proposition extends Component {
                                 <PropositionListItem
                                     key={i} 
                                     data={r} 
-                                    toggleEditModal={this.toggleEditModal} 
+                                    toggleEditModal={this.toggleEdit2Modal} 
                                     handleDelete={this.handleDelete}
                                     checked={r.is_accept}
                                     handleAccept={this.handleAccept}
@@ -241,9 +258,17 @@ class Proposition extends Component {
             }
             
           </Colxx>
-        </Row>
-        
+        </Row>      
     </Fragment>
+    <Edit2Proposition
+      toggleModal={this.toggleEdit2Modal}
+      modalOpen={edit2ModalOpen}
+      annonce_id={annonce_id}
+      user_id={user_id}
+      history={this.props.history}
+    />
+
+</>
     )
   }
 }

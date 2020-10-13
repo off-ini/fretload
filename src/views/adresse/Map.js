@@ -136,7 +136,7 @@ class MapBox extends React.Component {
       {
         marker.show ?
         <Marker latitude={marker.lat} longitude={marker.lng} offsetLeft={-20} offsetTop={-10}>
-          <img src="/assets/img/pin.png" alt="..." />
+          <img src="/assets/img/marker.png" alt="..." />
         </Marker>
         :
         null

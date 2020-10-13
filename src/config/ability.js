@@ -34,7 +34,7 @@ function defineRulesFor(auth) {
   can("view", "TypeMarchandises");
   can("view", "TypeVehicules");
   can("view", "Profils");
-
+  
   if (auth.roles.find(e => e === 'Admin')) {
     can("user", "Admin");
 
@@ -78,6 +78,8 @@ function defineRulesFor(auth) {
     can("view", "Missions");
     can('button', 'payer');
     can('button', 'next');
+
+    can("view", "Paided");
   }
   if (auth.roles.find(e => e === 'Transporteur')) {
     can("user", "Transporteur");
