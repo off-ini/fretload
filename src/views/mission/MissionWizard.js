@@ -192,7 +192,7 @@ class TopNavDisabled extends Component {
     .post(APIModel.HOST + "missions/paiding/"+user.id+"/"+mission.id)
     .then(res => {
       let identifier = new Date().getTime();
-      window.location.replace("https://paygateglobal.com/v1/page?token=44e087cf-2a90-4bf9-85af-3634a2054e73&amount=1&identifier="+identifier+"&url="+APIModel.HOST + "payements");
+      window.location.replace("https://paygateglobal.com/v1/page?token=44e087cf-2a90-4bf9-85af-3634a2054e73&amount=150&identifier="+identifier+"&url="+APIModel.HOST + "payements");
     })
     .catch(e => {
         msg.errorHandler(e, dispatch, history);
