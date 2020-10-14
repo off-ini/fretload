@@ -37,9 +37,13 @@ class TMarchandise extends Component {
             </div>
             <Separator className="mb-5" />
             
-                <Row style={{'textAlign':'center'}}>   
+                <Row style={{'textAlign':'center'}}> 
+                  <Colxx xxs="12">
                     <h1 style={{'textAlign':'center'}}>Paiement éffectuer avec sucess</h1>
+                  </Colxx>  
+                  <Colxx xxs="12">
                     <h3 style={{'textAlign':'center'}}><NavLink to="/app/missions">Retour</NavLink></h3>
+                  </Colxx>   
                 </Row>
                           
           </Colxx>

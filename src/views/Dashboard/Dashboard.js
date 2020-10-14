@@ -14,6 +14,7 @@ import * as msg from '../../utils/messages';
 import APIModel from "../../models/APIModel";
 
 import AnnonceListItem from '../annonce/AnnonceListItem';
+//import Planning from './withDnDContext';
 
 class Dashboard extends Component {
   constructor(props)
@@ -204,7 +205,11 @@ class Dashboard extends Component {
                       </>
                   :null
               }
-           </>   
+           </> 
+
+          {/*<Colxx xxs="12" lg="12" className="mb-4">
+            <Planning />
+            </Colxx>*/}  
         </Row>
       </Fragment>
       </>

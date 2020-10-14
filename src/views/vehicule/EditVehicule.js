@@ -15,6 +15,7 @@ import {
   Label
 } from "reactstrap";
 import Select from "react-select";
+import NumberFormat from 'react-number-format';
 import DropZone from "../../components/DropZone";
 
 import CustomSelectInput from "../../components/common/CustomSelectInput";
@@ -123,6 +124,20 @@ class EditVehicule extends Component {
       reader.readAsDataURL(file);
   }
 
+  onValueChangeC = (values) => {
+    const {formattedValue, value} = values;
+    this.setState({
+      capacite:value
+    })
+  }
+
+  onValueChangeT = (values) => {
+    const {formattedValue, value} = values;
+    this.setState({
+      taille:value
+    })
+  }
+
   handleSubmit = (e) => {
     this.setState({validing:true});
 
@@ -183,14 +198,14 @@ class EditVehicule extends Component {
                 <Row>
                     <Col sm={6} md={6} xl={6} xs={6}>
                         <Label className="form-group has-float-label">
-                          <Input type="text" name="capacite" value={this.state.capacite} onChange={this.handleChange} />
+                        <NumberFormat format="#######" value={parseFloat(this.state.capacite)} customInput={Input} onValueChange={(values) => this.onValueChangeC(values)} />
                             <span>Capacité</span>
                         </Label>
                     </Col>
 
                     <Col sm={6} md={6} xl={6} xs={6}>
                         <Label className="form-group has-float-label">
-                          <Input type="text" name="taille" value={this.state.taille} onChange={this.handleChange} />
+                        <NumberFormat format="#######" value={parseFloat(this.state.taille)} customInput={Input} onValueChange={(values) => this.onValueChangeT(values)} />
                             <span>Taille</span>
                         </Label>
                     </Col>

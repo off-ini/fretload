@@ -135,7 +135,7 @@ class Adresse extends Component {
                 <Breadcrumb match={this.props.match} />
             </div>
 
-            <div className="mb-2">
+            {/*<div className="mb-2">
               <Button
                 color="empty"
                 className="pt-0 pl-0 d-inline-block d-md-none"
@@ -154,7 +154,7 @@ class Adresse extends Component {
                   <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
                     <DropdownToggle caret color="outline-dark" size="xs">
                       OrderBy
-                      {/*orderColumn ? orderColumn.label : ""*/}
+                      {/*orderColumn ? orderColumn.label : ""*
                     </DropdownToggle>
                     <DropdownMenu>
                       {/*orderColumns.map((o, index) => {
@@ -166,7 +166,7 @@ class Adresse extends Component {
                             {o.label}
                           </DropdownItem>
                         );
-                      })*/}
+                      })
                     </DropdownMenu>
                   </UncontrolledDropdown>
                   <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
@@ -181,7 +181,7 @@ class Adresse extends Component {
                   </div>
                 </div>
               </Collapse>
-            </div>
+                    </div>*/}
             
             <Separator className="mb-5" />
             {

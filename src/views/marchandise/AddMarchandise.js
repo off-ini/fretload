@@ -16,6 +16,8 @@ import {
 } from "reactstrap";
 import Select from "react-select";
 import DropZone from "../../components/DropZone";
+import NumberFormat from 'react-number-format';
+import { NavLink } from "react-router-dom";
 
 import CustomSelectInput from "../../components/common/CustomSelectInput";
 
@@ -150,6 +152,27 @@ class AddMarchandise extends Component {
       reader.readAsDataURL(file);
   }
 
+  onValueChangeQ = (values) => {
+    const {formattedValue, value} = values;
+    this.setState({
+      qte:value
+    })
+  }
+
+  onValueChangeV = (values) => {
+    const {formattedValue, value} = values;
+    this.setState({
+      volume:value
+    })
+  }
+
+  onValueChangeP = (values) => {
+    const {formattedValue, value} = values;
+    this.setState({
+      poid:value
+    })
+  }
+
   handleSubmit = (e) => {
     this.setState({validing:true});
 
@@ -214,27 +237,28 @@ class AddMarchandise extends Component {
                 <Row>
                     <Col sm={4} md={4} xl={4} xs={4}>
                         <Label className="form-group has-float-label">
-                          <Input type="text" name="qte" value={this.state.qte} onChange={this.handleChange} />
+                        <NumberFormat format="#######" customInput={Input} onValueChange={(values) => this.onValueChangeQ(values)} />
                             <span>Quantité</span>
                         </Label>
                     </Col>
 
                     <Col sm={4} md={4} xl={4} xs={4}>
                         <Label className="form-group has-float-label">
-                          <Input type="text" name="poid" value={this.state.poid} onChange={this.handleChange} />
+                        <NumberFormat format="#######" customInput={Input} onValueChange={(values) => this.onValueChangeP(values)} />
                             <span>Poid (Tone)</span>
                         </Label>
                     </Col>
 
                     <Col sm={4} md={4} xl={4} xs={4}>
                         <Label className="form-group has-float-label">
-                          <Input type="text" name="volume" value={this.state.volume} onChange={this.handleChange} />
+                        <NumberFormat format="#######" customInput={Input} onValueChange={(values) => this.onValueChangeV(values)} />
                             <span>Volume (m<sup>3</sup>)</span>
                         </Label>
                     </Col>
                 </Row>
                 <Row>
                   <Col sm={6} md={6} xl={6} xs={6}>
+                    <NavLink to="/app/adresses/add"><i className="simple-icon-plus"></i></NavLink>
                     <div className="form-group has-float-label">
                         <Select
                             components={{ Input: CustomSelectInput }}
@@ -254,6 +278,7 @@ class AddMarchandise extends Component {
                     </div>
                   </Col>
                   <Col sm={6} md={6} xl={6} xs={6}>
+                  <NavLink to="/app/adresses/add"><i className="simple-icon-plus"></i></NavLink>
                     <div className="form-group has-float-label">
                         <Select
                             components={{ Input: CustomSelectInput }}
