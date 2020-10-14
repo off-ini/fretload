@@ -118,6 +118,13 @@ const status = [
             <div className="mb-3">
             <p className="d-sm-inline-block m-2">
               {
+                data.status >= 2 ?
+                  <NavLink to={`/app/missions/rapport/${data.id}`} >
+                    <Button outline size="xs" color="primary" ><i className="iconsminds-file-clipboard"></i></Button>
+                  </NavLink>
+                :null
+              }
+              {
                 data.status >= 1 && data.status < 2 ? 
                   <NavLink to={`/app/missions/stream/${data.id}`} >
                     <Button outline size="xs" color="danger" ><i className="iconsminds-map2"></i></Button>

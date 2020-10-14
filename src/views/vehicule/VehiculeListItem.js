@@ -121,7 +121,7 @@ const status = [
                 data.taille ?
                 <Colxx md="6" sm="6" lg="6" xxs="12" >
                     <p className="text-muted text-small mb-2">
-                        Taille
+                        Taille (m)
                     </p>
                     <p className="mb-3">{data.taille}</p>
                 </Colxx>

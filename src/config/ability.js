@@ -76,6 +76,7 @@ function defineRulesFor(auth) {
     can("view", "Propositions");
 
     can("view", "Missions");
+    can("view", "RAPPORTMissions");
     can('button', 'payer');
     can('button', 'next');
 
@@ -94,6 +95,7 @@ function defineRulesFor(auth) {
     can("view", "Propositions");
     can("view", "ADDPropositions");
     can("view", "EDITPropositions");
+    can("view", "RAPPORTMissions");
     can("add", "Propositionss");
     can("edit", "Propositions");
     can("delete", "Propositions");
@@ -129,6 +131,7 @@ function defineRulesFor(auth) {
     can("delete", "Propositions");*/
 
     can("view", "Missions");
+    can("view", "RAPPORTMissions");
 
     can('action', 'charger');
     can('action', 'livrer');

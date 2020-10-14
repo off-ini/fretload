@@ -239,7 +239,7 @@ class TopNavDisabled extends Component {
               return (
                 <Can I="button" a="payer">
                   {/*<BottomNavigationM onClickNext={() => this.props.togglePayementModal(mission.id)} onClickPrev={this.onClickPrev} className="justify-content-center" prevLabel="Précédent" nextLabel="Valider"/>*/}
-                  <BottomNavigationM onClickNext={() => this.paiding()} onClickPrev={this.onClickPrev} className="justify-content-center" prevLabel="Précédent" nextLabel="Valider"/>
+                  <BottomNavigationM onClickNext={() => this.paiding()} onClickPrev={this.onClickPrev} className="justify-content-center" prevLabel="Précédent" nextLabel="Paiement"/>
                 </Can>
               )
             }else if(step == 2 && payer)

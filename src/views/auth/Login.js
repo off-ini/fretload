@@ -126,7 +126,7 @@ class Login extends Component {
                 {/*<span className="logo-single" />*/}
               </NavLink>
               <CardTitle className="mb-4">
-                <IntlMessages id="user.login-title" />
+                Connexion
               </CardTitle>
 
               <Formik

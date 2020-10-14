@@ -22,6 +22,7 @@ const Tracker = React.lazy(() => import('./views/mission/Tracker'));
 const StreamMap = React.lazy(() => import('./views/mission/Stream'));
 const AddMission = React.lazy(() => import('./views/mission/AddMission'));
 const EditMission = React.lazy(() => import('./views/mission/EditMission'));
+const RapportMission = React.lazy(() => import('./views/mission/MissionRapport'));
 
 
 export default [
@@ -47,4 +48,5 @@ export default [
   { path: "/app/missions/paided", name: "Paided", tag:'Paided', component: MissionPaided },
   { path: "/app/missions/add/:id", name: "Add Mission", tag:'ADDMissions', component: AddMission },
   { path: "/app/missions/edit/:id", name: "Edit Mission", tag:'EDITMissions', component: EditMission },
+  { path: "/app/missions/rapport/:id", name: "Rapport Mission", tag:'RAPPORTMissions', component: RapportMission },
 ];

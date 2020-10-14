@@ -45,9 +45,14 @@ const status = [
 <Colxx md="6" sm="4" lg="4" xxs="12" className="mb-4">
     <Card className="mb-4">
       <div className="position-absolute card-top-buttons">
-        <Button outline color="primary" className="icon-button" onClick={() => toggleAnnonceModal(data.id)}>
-          <i className="simple-icon-bell" />
-        </Button>
+        {
+          data.status < 1 ?
+          <Button outline color="primary" className="icon-button" onClick={() => toggleAnnonceModal(data.id)}>
+            <i className="simple-icon-bell" />
+          </Button>
+          :null
+        }
+        
       </div>
       {
           data.image ? 
@@ -142,7 +147,7 @@ const status = [
                 data.poid ?
                 <Colxx md="4" sm="4" lg="4" xxs="12" >
                     <p className="text-muted text-small mb-2">
-                        Poid
+                        Poid (Tone)
                     </p>
                     <p className="mb-3">{data.poid}</p>
                 </Colxx>
@@ -152,7 +157,7 @@ const status = [
                 data.volume ?
                 <Colxx md="4" sm="4" lg="4" xxs="12" >
                     <p className="text-muted text-small mb-2">
-                        Volume
+                        Volume (m<sup>3</sup>)
                     </p>
                     <p className="mb-3">{data.volume}</p>
                 </Colxx>
@@ -161,6 +166,8 @@ const status = [
         </Row>
         
         <div className="mb-3">
+        {
+          data.status < 1 ?
           <p className="d-sm-inline-block mb-1 ml-5">
           <Can I="edit" a="Marchandises">
             <Button outline size="xs" color="info" onClick={() => toggleEditModal(data.id)}><i className="iconsminds-pen-2"></i></Button>
@@ -169,6 +176,8 @@ const status = [
             <Button outline size="xs" color="danger" onClick={() => handleDelete(data.id)}><i className="simple-icon-trash"></i></Button>
           </Can>
           </p>
+          :null
+        }  
         </div>
       </CardBody>
     </Card>

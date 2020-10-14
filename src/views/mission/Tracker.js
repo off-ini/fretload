@@ -22,7 +22,7 @@ import Breadcrumb from "../../containers/DefaultLayout/navs/Breadcrumb";
 import * as msg from '../../utils/messages';
 import APIModel from "../../models/APIModel";
 
-import Map from './Map';
+import Map from './Map2';
 
 class Tracker extends Component {
   constructor(props) {
@@ -266,27 +266,6 @@ class Tracker extends Component {
 
         <Fragment>
           <Row>
-            <Colxx xxs="12" lg="12" className="mb-2">
-              <Label className="form-group has-float-label">
-                <Input type="select" name="code" onChange={this.handleChange}>
-                <option key={0} value={null}>__ __ __ __ __ __ __ __ __ __ </option>
-                  {
-                    this.state.users ?
-                    <>
-                    {
-                      this.state.users.map((user, indx) => {
-                        return(
-                          <option key={indx} value={user.code}>{user.name + ' ' + user.f_name}</option>
-                        )
-                      })
-                    }
-                    </>
-                    :null
-                  }
-                </Input>
-                <span>Users</span>
-              </Label>   
-            </Colxx>
             <Colxx xxs="12" lg="12" className="mb-4">
                 <Map 
                     viewport={this.state.viewport}
